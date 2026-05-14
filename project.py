@@ -46,7 +46,7 @@ def track_drawing_function():
                     return track_points_pressed
         screen_display.fill(white)
 
-        if len(track_points_pressed) >= 1:
+        if len(track_points_pressed) >= 2:
             pygame.draw.lines(screen_display,black,True,track_points_pressed,5)
         pygame.display.update()
 
@@ -84,8 +84,9 @@ def track_analyzation(when_pressed):
 def calculate_time(Car, track_distance, track_left_turns, track_right_turns):
     current_time=0
     current_time += track_distance/ Car.speed
-    current_time += track_left_turns/Car.turn_left
-    current_time += track_right_turns/Car.turn_right
+    # The times 20 is to make it more even because before speeddemon was winning everytime
+    current_time += (track_left_turns* 20)/Car.turn_left
+    current_time += (track_right_turns* 20)/Car.turn_right
     current_time -= Car.distance
 
     return current_time
