@@ -49,9 +49,7 @@ def track_drawing_function():
         if len(track_points_pressed) >= 1:
             pygame.draw.lines(screen_display,black,True,track_points_pressed,5)
         pygame.display.update()
-track = track_drawing_function()
-print("Tracking points: ", track)
-pygame.quit()
+
 
 
 def track_analyzation(when_pressed):
@@ -83,8 +81,46 @@ def track_analyzation(when_pressed):
             track_right_turns +=1
     return track_distance, track_left_turns, track_right_turns
 
+def calculate_time(Car, track_distance, track_left_turns, track_right_turns):
+    current_time=0
+    current_time += track_distance/ Car.speed
+    current_time += track_left_turns/Car.turn_left
+    current_time += track_right_turns/Car.turn_right
+    current_time -= Car.distance
+
+    return current_time
+
+def winner(cars,track_distance, track_left_turns, track_right_turns):
+    fastest_car=cars[0]
+    fastest_time = calculate_time(fastest_car, track_distance, track_left_turns, track_right_turns)
+
+    for car in cars:
+        car_time = calculate_time(car, track_distance, track_left_turns, track_right_turns)
+        print(car.name, "took", round(car_time,2), "seconds to finish")
+        if car_time < fastest_time:
+            fastest_time = car_time
+            fastest_car = car
+
+    return fastest_car, fastest_time
+
+track = track_drawing_function()
+print("Tracking points:", track)
+
+track_distance, track_left_turns, track_right_turns = track_analyzation(track)
+
+print("Track distance", round(track_distance,2))
+print("Left Turns:", track_left_turns)
+print("Right Turns:", track_right_turns)
+
+cars = [car1,car2,car3,car4]
+
+winning_car, quickest_time = winner(cars, track_distance, track_left_turns, track_right_turns)
+
+print("the winner is:", winning_car.name)
+print("Winning time:", round(quickest_time,2),"seconds")
 
 
+pygame.quit()
 
 
 
