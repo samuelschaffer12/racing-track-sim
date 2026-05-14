@@ -1,30 +1,15 @@
 import math
-import time
 import pygame
 
 
-class Car:
-    def __init__(self, name, speed, turn_left, turn_right, distance):
-        self.name = name
-        self.speed = speed
-        self.turn_left = turn_left
-        self.turn_right = turn_right
-        self.distance = distance
-car1 = Car("SpeedDemon", 9,6,6,7)
-car2 = Car("Lefty", 6,9,7,6)
-car3 = Car("Righty", 6,7,9,6)
-car4 = Car("Balanced", 7,7,7,7)
+from cars import Car, car1,car2,car3,car4
 
 
 #all of the pygame functions were looked up as I wasn't very familiar with the external tool
-pygame.init()
 
-width, height = 1000,700
-screen_display = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Draw your track here!")
-white = (255,255,255)
-black = (0,0,0)
+
 def track_drawing_function():
+    #Opens pygame and has it create a blank white screen where the user can draw the track. Pressing c clears the track and enter confirms the track. Returns the coordinates of points
     playing_game = True
     is_mouse_being_pressed = False
     track_points_pressed = []
@@ -53,6 +38,7 @@ def track_drawing_function():
 
 
 def track_analyzation(when_pressed):
+    # The calculation part of my code. Calculates the distance in pixels and the amount of left and right turns.
     track_distance=0
     track_left_turns=0
     track_right_turns=0
@@ -92,6 +78,7 @@ def calculate_time(Car, track_distance, track_left_turns, track_right_turns):
     return current_time
 
 def winner(cars,track_distance, track_left_turns, track_right_turns):
+    #Comapres the times of all the cars and returns the winner/fastest
     fastest_car=cars[0]
     fastest_time = calculate_time(fastest_car, track_distance, track_left_turns, track_right_turns)
 
@@ -103,25 +90,31 @@ def winner(cars,track_distance, track_left_turns, track_right_turns):
             fastest_car = car
 
     return fastest_car, fastest_time
+if __name__ == "__main__":
+    pygame.init()
 
-track = track_drawing_function()
-print("Tracking points:", track)
+    width, height = 1000,700
+    screen_display = pygame.display.set_mode((width, height))
+    pygame.display.set_caption("Draw your track here!")
+    white = (255,255,255)
+    black = (0,0,0)
+    track = track_drawing_function()
+    print("Tracking points:", track)
+    track_distance, track_left_turns, track_right_turns = track_analyzation(track)
 
-track_distance, track_left_turns, track_right_turns = track_analyzation(track)
+    print("Track distance", round(track_distance,2))
+    print("Left Turns:", track_left_turns)
+    print("Right Turns:", track_right_turns)
 
-print("Track distance", round(track_distance,2))
-print("Left Turns:", track_left_turns)
-print("Right Turns:", track_right_turns)
+    cars = [car1,car2,car3,car4]
 
-cars = [car1,car2,car3,car4]
+    winning_car, quickest_time = winner(cars, track_distance, track_left_turns, track_right_turns)
 
-winning_car, quickest_time = winner(cars, track_distance, track_left_turns, track_right_turns)
-
-print("the winner is:", winning_car.name)
-print("Winning time:", round(quickest_time,2),"seconds")
+    print("the winner is:", winning_car.name)
+    print("Winning time:", round(quickest_time,2),"seconds")
 
 
-pygame.quit()
+    pygame.quit()
 
 
 

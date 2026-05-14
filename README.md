@@ -2,7 +2,7 @@
 BCOG 200
 
 
-1. My planned project is to make a couple of different cars that are of varying strengths and weaknesses at certain skills. Such as speed, turning left, turning right, acceleration, and distance. From there, the user will design a track with some sort of drawing feature and the code will calculate which car would be the quickest to finish the race and win.
+1. This project is a user interactive racing simulator where you draw a custom track in a pygame window, and my code returns which car that I created would win the race. There are 4 different cars, each with different stats and strengths, such as speed, turning left, and turning right. The code chooses a winner depending on the track designed by the user. Each does better in different stats and the program times the hypothetical time each car would take to run through the track, and prints the fastest time in the terminal.
 
 2. A. I would have a create track function that lets the user draw and make the track to the way of their liking.
 B. My second function would be calculating how long each individual car would take around the track depending on how it looks.
